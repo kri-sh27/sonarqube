@@ -50,16 +50,17 @@
 
 node {
     stage('prep') {
-        // Install Docker
-        sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-        sh 'sh get-docker.sh'
-        sh 'docker --version'
+    // Install Docker without superuser privileges
+    sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+    sh 'sh get-docker.sh'
+    sh 'docker --version'
 
-        def myGradleContainer = docker.image('gradle:jdk8-alpine')
-        myGradleContainer.pull()
+    def myGradleContainer = docker.image('gradle:jdk8-alpine')
+    myGradleContainer.pull()
 
-        git url: 'https://github.com/kri-sh27/gs-gradle.git'
-    }
+    git url: 'https://github.com/kri-sh27/gs-gradle.git'
+}
+
 
     stage('build') {
         myGradleContainer.inside("-v ${env.HOME}/.gradle:/home/gradle/.gradle") {
