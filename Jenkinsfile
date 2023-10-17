@@ -4,6 +4,7 @@ node {
 
     stage('prep') {
         git url: 'https://github.com/kri-sh27/gs-gradle.git'
+        sh 'docker --version'
     }
 
     stage('build') {
